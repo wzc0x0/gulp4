@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "wzc0x0@gmail.com",
   "license": "MIT",
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
   "devDependencies": {
     "browser-sync": "^2.26.7",
     "del": "^5.1.0",

@@ -13,39 +13,44 @@ const browserSync = require("browser-sync").create();
  */
 
 const paths = {
-    styles: {
-        src: "src/styles/**/*.less",
-        dev: "src/styles/",
-        dest: "dest/styles/",
-    },
-    scripts: {
-        src: "src/scripts/**/*.js",
-        dev: "src/scripts/",
-        dest: "dest/scripts/",
-    },
-    html: {
-        src: "src/html/**/*.html",
-        dest: "dest/html/",
-    },
+  styles: {
+    src: "src/styles/**/*.less",
+    dev: "src/styles/",
+    dest: "dest/styles/",
+  },
+  scripts: {
+    src: "src/scripts/**/*.js",
+    dev: "src/scripts/",
+    dest: "dest/scripts/",
+  },
+  html: {
+    src: "src/html/**/*.html",
+    dest: "dest/html/",
+  },
+  index: {
+    src: "src/index.html",
+    dest: "dest/",
+  },
 };
 
 const styles = () =>
-    gulp
+  gulp
     .src(paths.styles.src)
     .pipe(less())
     .pipe(gulp.dest(paths.styles.dev))
     .pipe(browserSync.stream());
 
 const dev = () => {
-    browserSync.init({
-        server: {
-            baseDir: "src",
-        },
-        open: false,
-    });
-    gulp.watch(paths.html.src).on("change", browserSync.reload);
-    gulp.watch(paths.scripts.src).on("change", browserSync.reload);
-    gulp.watch(paths.styles.src).on("change", styles);
+  browserSync.init({
+    server: {
+      baseDir: "src",
+    },
+    open: false,
+  });
+  gulp.watch(paths.index.src).on("change", browserSync.reload);
+  gulp.watch(paths.html.src).on("change", browserSync.reload);
+  gulp.watch(paths.scripts.src).on("change", browserSync.reload);
+  gulp.watch(paths.styles.src).on("change", styles);
 };
 
 exports.dev = dev;
@@ -58,7 +63,7 @@ const del = require("del");
 const clean = () => del(["dest"]);
 
 const css = () =>
-    gulp
+  gulp
     .src("src/styles/**/*.css")
     .pipe(rev())
     .pipe(gulp.dest(paths.styles.dest))
@@ -66,7 +71,7 @@ const css = () =>
     .pipe(gulp.dest("rev/css"));
 
 const js = () =>
-    gulp
+  gulp
     .src(paths.scripts.src)
     .pipe(rev())
     .pipe(gulp.dest(paths.scripts.dest))
@@ -75,14 +80,21 @@ const js = () =>
 
 const html = () => gulp.src(paths.html.src).pipe(gulp.dest(paths.html.dest));
 
+const indexHtml = () =>
+  gulp.src(paths.index.src).pipe(gulp.dest(paths.index.dest));
+
 const collector = () =>
-    gulp
+  gulp
     .src(["rev/**/*.json", "dest/**/*.html"])
     .pipe(
-        revCollector({
-            replaceReved: true,
-        })
+      revCollector({
+        replaceReved: true,
+      })
     )
     .pipe(gulp.dest("dest"));
 
-exports.build = gulp.series(clean, gulp.parallel(css, js, html), collector);
+exports.build = gulp.series(
+  clean,
+  gulp.parallel(css, js, html, indexHtml),
+  collector
+);
