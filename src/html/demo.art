@@ -1,0 +1,12 @@
+{{extend '../components/layout.art'}}
+
+{{block 'title'}}首页{{/block}}
+
+{{block 'head'}}
+{{/block}}
+
+{{block 'content'}}
+<section class="news">
+  <% include('../components/news.art', {text:'新闻112'}) %>
+</section>
+{{/block}}

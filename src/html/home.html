@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    {{include '../components/common.html'}}
     <link rel="stylesheet" href="../styles/home/home.css" />
     <link rel="stylesheet" href="../styles/home/styles.css" />
   </head>
@@ -14,6 +12,10 @@
       <h1>This is home</h1>
       <h1>This is home</h1>
     </div>
+    <!-- 新闻模块 -->
+    <section class="news">
+      <% include('../components/news.html', { text: '新闻列表' }) %>
+    </section>
     <script src="../scripts/home/home.js"></script>
   </body>
 </html>

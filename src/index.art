@@ -1,0 +1,12 @@
+{{extend './components/layout.art'}}
+
+{{block 'title'}}首页{{/block}}
+
+{{block 'head'}}
+<link rel="stylesheet" href="./styles/home/home.css" />
+{{/block}}
+
+{{block 'content'}}
+<p>This is just an awesome page.</p>
+<img src="./public/assets/rocket.jpg" alt="" />
+{{/block}}
